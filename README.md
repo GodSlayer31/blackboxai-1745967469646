@@ -1,2 +1,2 @@
-# Performance tracker
-Built by ai
+# student portal
+Built by yours truly 
