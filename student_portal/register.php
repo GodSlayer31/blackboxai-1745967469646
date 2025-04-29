@@ -34,19 +34,32 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt3 = $conn->prepare("INSERT INTO users (username, password_hash, id_number, role, email) VALUES (?, ?, ?, ?, ?)");
                 $stmt3->bind_param("sssss", $username, $password_hash, $id_number, $role, $email);
 
-                if ($stmt3->execute()) {
-                    // Send registration confirmation email
-                    $subject = "Registration Successful";
-                    $body = "Hello $username,<br>Your registration was successful.";
-                    sendEmail($email, $subject, $body);
+if ($stmt3->execute()) {
+    // Generate a verification token
+    $verification_token = bin2hex(random_bytes(16));
 
-                    $_SESSION['username'] = $username;
-                    $_SESSION['role'] = $role;
-                    header("Location: login.php");
-                    exit();
-                } else {
-                    $message = "Error during registration.";
-                }
+    // Store the token in session or database (for simplicity, session here)
+    $_SESSION['verification_token'] = $verification_token;
+    $_SESSION['pending_user'] = [
+        'username' => $username,
+        'role' => $role,
+        'email' => $email,
+        'id_number' => $id_number,
+        'password_hash' => $password_hash
+    ];
+
+    // Send verification email with token link
+    $verification_link = "http://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/verify.php?token=" . $verification_token;
+    $subject = "Verify Your Email Address";
+    $body = "Hello $username,<br>Please click the following link to verify your email address:<br><a href='$verification_link'>$verification_link</a>";
+    sendEmail($email, $subject, $body);
+
+    // Redirect to a page informing user to check email
+    header("Location: verify_notice.php");
+    exit();
+} else {
+    $message = "Error during registration.";
+}
             } else {
                 $message = "Passwords do not match.";
             }
