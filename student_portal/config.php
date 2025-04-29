@@ -13,8 +13,9 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Load Composer's autoloader for PHPMailer
-require 'vendor/autoload.php';
+require_once 'PHPMailer/Exception.php';
+require_once 'PHPMailer/PHPMailer.php';
+require_once 'PHPMailer/SMTP.php';
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
