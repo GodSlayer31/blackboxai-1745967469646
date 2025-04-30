@@ -29,13 +29,13 @@ function sendEmail($to, $subject, $body) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';  // Set your SMTP server
         $mail->SMTPAuth = true;
-        $mail->Username = 'mhast2154@gmail.com'; // SMTP username
-        $mail->Password = 'vbzfrvkzuolvhwfe';         // SMTP password
+        $mail->Username = 'your@gmail.com'; // SMTP username
+        $mail->Password = 'app password';         // SMTP password
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
         //Recipients
-        $mail->setFrom('mhast2154@gmail.com', 'Student Portal');
+        $mail->setFrom('your@gmail.com', 'Student Portal');
         $mail->addAddress($to);
 
         // Content
