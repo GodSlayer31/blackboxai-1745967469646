@@ -24,16 +24,18 @@ function sendEmail($to, $subject, $body) {
     $mail = new PHPMailer(true);
     try {
         //Server settings
+        $mail->SMTPDebug = 2; // Enable verbose debug output
+        $mail->Debugoutput = 'html';
         $mail->isSMTP();
-        $mail->Host = 'smtp.example.com';  // Set your SMTP server
+        $mail->Host = 'smtp.gmail.com';  // Set your SMTP server
         $mail->SMTPAuth = true;
-        $mail->Username = 'your_email@example.com'; // SMTP username
-        $mail->Password = 'your_password';         // SMTP password
+        $mail->Username = 'mhast2154@gmail.com'; // SMTP username
+        $mail->Password = 'vbzfrvkzuolvhwfe';         // SMTP password
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
 
         //Recipients
-        $mail->setFrom('your_email@example.com', 'Student Portal');
+        $mail->setFrom('mhast2154@gmail.com', 'Student Portal');
         $mail->addAddress($to);
 
         // Content
